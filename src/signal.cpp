@@ -191,7 +191,9 @@ double Signal::getEntropy() const {
     double entropy = 0;
 
     for (int i = 0; i < histogramYAxis.size(); ++i) {
-        entropy += histogramYAxis[i] * log2(histogramYAxis[i]);
+        if (histogramYAxis[i]) {
+            entropy += histogramYAxis[i] * log2(histogramYAxis[i]);
+        }
     }
 
     return ( -entropy );
