@@ -54,6 +54,24 @@ void Signal::setByConvolution(const Signal& signalA, const Signal& signalB) {
     setMinMax();
 }
 
+void Signal::convolveHistograms(Signal& anotherSignal, int bins) {
+    QVector<double> convolution;
+
+    // make sure that histograms exist and use the same bins value
+    setHistogram(bins);
+    anotherSignal.setHistogram(bins);
+
+    QVector<double> anotherHistogramYAxis = anotherSignal.getHistogramYAxis();
+    double hSize = histogramYAxis.size();
+
+    for (int i = 0; i < hSize; ++i) {
+        convolution.push_back(histogramYAxis[hSize - i - 1] * anotherHistogramYAxis[i]);
+    }
+
+    histogramYAxis.clear();
+    histogramYAxis = convolution;
+}
+
 void Signal::setByFormula(int count, double step, double a, double b, double sigma, double mu) {
     signal.clear();
     signal.reserve(count);
@@ -116,7 +134,7 @@ void Signal::setByNoise(int count, double mean, double sd) {
 }
 
 double Signal::hround(double value, double bin) {
-   return ( floor(value/bin) * bin );
+   return ( floor(value/bin)  );
 }
 
 void Signal::setHistogram(double bins) {
@@ -131,11 +149,16 @@ void Signal::setHistogram(double bins) {
         ++histogram[hround(signal[i], bin)];
     }
 
-    histogramXAxis.reserve(histogram.size());
-    histogramYAxis.reserve(histogram.size());
+    // fill unused keys values with zeros
+    for (double i = hround(getMin(), bin); i <= hround(getMax(), bin); ++i) {
+        histogram[i];
+    }
 
-    for(auto const& point : histogram.toStdMap()) {
-        histogramXAxis.push_back(point.first);
+    histogramXAxis.reserve(histogramBins);
+    histogramYAxis.reserve(histogramBins);
+
+    for (auto const& point : histogram.toStdMap()) {
+        histogramXAxis.push_back(point.first * bin);
         histogramYAxis.push_back(point.second / signal.size());
     }
 }
@@ -176,12 +199,4 @@ double Signal::getEntropy() const {
 
 size_t Signal::getSize() const {
     return signal.size();
-}
-
-bool Signal::hasHistogram() const {
-    if (histogramYAxis.empty()) {
-        return false;
-    }
-
-    return true;
 }

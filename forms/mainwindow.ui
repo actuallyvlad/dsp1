@@ -33,7 +33,7 @@
        </sizepolicy>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>2</number>
       </property>
       <widget class="QWidget" name="tabSignal">
        <attribute name="title">
@@ -393,7 +393,7 @@
            </sizepolicy>
           </property>
           <property name="text">
-           <string>Convolution</string>
+           <string>Convolve signal and noise histograms</string>
           </property>
          </widget>
         </item>

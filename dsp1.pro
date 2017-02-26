@@ -10,7 +10,7 @@ RC_FILE = ./icons/dsp1.rc
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets printsupport
 
-TARGET = inftheory_lab1_signproc
+TARGET = dsp1
 TEMPLATE = app
 
 # The following define makes your compiler emit warnings if you use

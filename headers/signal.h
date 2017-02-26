@@ -19,10 +19,9 @@ class Signal
         const QVector<double>& getSignal() const;
         const QVector<double>& getHistogramXAxis() const;
         const QVector<double>& getHistogramYAxis() const;
+        void convolveHistograms(Signal &anotherSignal, int bins);
         const QVector<double>& getProbability() const;
         double getEntropy() const;
-        // remove?
-        bool hasHistogram() const;
         double getMin() const;
         double getMax() const;
         size_t getSize() const;

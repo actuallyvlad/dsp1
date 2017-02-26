@@ -210,11 +210,13 @@ void MainWindow::on_buttonRun_clicked()
         else if (ui->radioSum->isChecked()) {
             radio = sumLabel;
         }
-        else if (ui->radioConvolution->isChecked()) {
-            radio = convolutionLabel;
-        }
 
         data[radio].setHistogram(histogramBins);
+
+        if (ui->radioConvolution->isChecked()) {
+            radio = signalLabel;
+            data[radio].convolveHistograms(data[noiseLabel], histogramBins);
+        }
 
         ui->fieldEntropy->setText(QString::number(data[radio].getEntropy()));
 
@@ -247,7 +249,7 @@ void MainWindow::on_buttonRun_clicked()
 
 void MainWindow::on_buttonSave_clicked()
 {
-    QString fileName = QFileDialog::getSaveFileName(this, tr("Save File"), "",
+    QString fileName = QFileDialog::getSaveFileName(this, tr("Save File"), QDir::homePath(),
                                                         tr("Images (*.png)"));
 
     if (!fileName.contains(".png", Qt::CaseInsensitive)) {
@@ -300,24 +302,24 @@ void MainWindow::on_checkBoxConvSignNoise_stateChanged(int arg1)
 
 void MainWindow::on_buttonSaveSignProb_clicked()
 {
-    QString fileName = QFileDialog::getSaveFileName(this, tr("Save File"), "",
-                                                        tr("Text (*.txt)"));
+    QString fileName = QFileDialog::getSaveFileName(this, tr("Save File"), QDir::homePath(),
+                                                        tr("Text files (*.txt)"));
 
     saveTableToFile(fileName, ui->tableSignProb);
 }
 
 void MainWindow::on_buttonSaveNoiseProb_clicked()
 {
-    QString fileName = QFileDialog::getSaveFileName(this, tr("Save File"), "",
-                                                        tr("Text (*.txt)"));
+    QString fileName = QFileDialog::getSaveFileName(this, tr("Save File"), QDir::homePath(),
+                                                        tr("Text files (*.txt)"));
 
     saveTableToFile(fileName, ui->tableNoiseProb);
 }
 
 void MainWindow::on_buttonSaveSumProb_clicked()
 {
-    QString fileName = QFileDialog::getSaveFileName(this, tr("Save File"), "",
-                                                        tr("Text (*.txt)"));
+    QString fileName = QFileDialog::getSaveFileName(this, tr("Save File"), QDir::homePath(),
+                                                        tr("Text files (*.txt)"));
 
     saveTableToFile(fileName, ui->tableSumProb);
 }
