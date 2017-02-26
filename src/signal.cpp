@@ -55,21 +55,32 @@ void Signal::setByConvolution(const Signal& signalA, const Signal& signalB) {
 }
 
 void Signal::convolveHistograms(Signal& anotherSignal, int bins) {
-    QVector<double> convolution;
-
     // make sure that histograms exist and use the same bins value
     setHistogram(bins);
     anotherSignal.setHistogram(bins);
 
     QVector<double> anotherHistogramYAxis = anotherSignal.getHistogramYAxis();
-    double hSize = histogramYAxis.size();
+    int hSize = histogramYAxis.size();
+    int cSize = hSize * 2 - 1;
+    histogramYAxis.resize(cSize);
+    anotherHistogramYAxis.resize(cSize);
 
-    for (int i = 0; i < hSize; ++i) {
-        convolution.push_back(histogramYAxis[hSize - i - 1] * anotherHistogramYAxis[i]);
+    QVector<double> convolution;
+    convolution.resize(cSize);
+
+    for (int i = 0; i < cSize; ++i) {
+        for (int j = 0; j < i; ++j) {
+            convolution[i] += histogramYAxis[i-j] * anotherHistogramYAxis[j];
+        }
     }
 
     histogramYAxis.clear();
     histogramYAxis = convolution;
+
+    histogramXAxis.clear();
+    histogramXAxis.resize(cSize);
+
+    std::iota(histogramXAxis.begin(), histogramXAxis.end(), 0);
 }
 
 void Signal::setByFormula(int count, double step, double a, double b, double sigma, double mu) {
