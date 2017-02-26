@@ -1,5 +1,4 @@
 #include "signal.h"
-#include <iostream>
 
 Signal::Signal() : min(0), max(0), histogramBins(0) {
 }
