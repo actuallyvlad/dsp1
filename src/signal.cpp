@@ -54,9 +54,10 @@ void Signal::setByConvolution(const Signal& signalA, const Signal& signalB) {
 }
 
 void Signal::convolveHistograms(Signal& anotherSignal, int bins) {
-    // make sure that histograms exist and use the same bins value
+    // make sure that histograms exist and use the same bin value
     setHistogram(bins);
-    anotherSignal.setHistogram(bins);
+    double anotherBins = fabs(anotherSignal.getMax() - anotherSignal.getMin()) / histogramBin;
+    anotherSignal.setHistogram(anotherBins);
 
     QVector<double> anotherHistogramYAxis = anotherSignal.getHistogramYAxis();
     int hSize = histogramYAxis.size();
@@ -68,8 +69,8 @@ void Signal::convolveHistograms(Signal& anotherSignal, int bins) {
     convolution.resize(cSize);
 
     for (int i = 0; i < cSize; ++i) {
-        for (int j = 0; j < i; ++j) {
-            convolution[i] += histogramYAxis[i-j] * anotherHistogramYAxis[j];
+        for (int j = 0; j <= i; ++j) {
+            convolution[cSize - 1 - i] += histogramYAxis[i-j] * anotherHistogramYAxis[j];
         }
     }
 
@@ -153,14 +154,14 @@ void Signal::setHistogram(double bins) {
     histogramXAxis.clear();
     histogramYAxis.clear();
 
-    double bin = fabs( getMax()-getMin() ) / histogramBins;
+    histogramBin = fabs( getMax()-getMin() ) / histogramBins;
 
     for (auto i = 0; i < signal.size(); ++i) {
-        ++histogram[hround(signal[i], bin)];
+        ++histogram[hround(signal[i], histogramBin)];
     }
 
     // fill unused keys values with zeros
-    for (double i = hround(getMin(), bin); i <= hround(getMax(), bin); ++i) {
+    for (double i = hround(getMin(), histogramBin); i <= hround(getMax(), histogramBin); ++i) {
         histogram[i];
     }
 
@@ -168,7 +169,7 @@ void Signal::setHistogram(double bins) {
     histogramYAxis.reserve(histogramBins);
 
     for (auto const& point : histogram.toStdMap()) {
-        histogramXAxis.push_back(point.first * bin);
+        histogramXAxis.push_back(point.first * histogramBin);
         histogramYAxis.push_back(point.second / signal.size());
     }
 }

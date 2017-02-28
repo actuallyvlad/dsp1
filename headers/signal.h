@@ -36,6 +36,7 @@ class Signal
         double min;
         double max;
         double histogramBins;
+        double histogramBin;
 };
 
 #endif // SIGNAL_H
