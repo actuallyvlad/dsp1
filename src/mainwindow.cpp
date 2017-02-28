@@ -110,7 +110,6 @@ void MainWindow::on_buttonSetDefault_clicked()
             ui->varSignalStep->setText(QString::number(signalDefaultStep));
             ui->varSignalCount->setText(QString::number(signalDefaultCount));
             ui->varSignalA->setText(QString::number(signalDefaultA));
-            ui->varSignalB->setText(QString::number(signalDefaultB));
             ui->varSignalSigma->setText(QString::number(signalDefaultSigma));
             ui->varSignalMu->setText(QString::number(signalDefaultMu));
     }
@@ -172,7 +171,6 @@ void MainWindow::on_buttonRun_clicked()
     int signalCount = ui->varSignalCount->text().toInt();
     double signalStep = ui->varSignalStep->text().toDouble();
     double signalA = ui->varSignalA->text().toDouble();
-    double signalB = ui->varSignalB->text().toDouble();
     double signalSigma = ui->varSignalSigma->text().toDouble();
     double signalMu = ui->varSignalMu->text().toDouble();
 
@@ -186,7 +184,7 @@ void MainWindow::on_buttonRun_clicked()
 
     Signal tempSignal;
 
-    tempSignal.setByFormula(signalCount, signalStep, signalA, signalB, signalSigma, signalMu);
+    tempSignal.setByFormula(signalCount, signalStep, signalA, signalSigma, signalMu);
     data[signalLabel] = tempSignal;
 
     tempSignal.setByNoise(noiseCount, noiseMean, noiseSD);

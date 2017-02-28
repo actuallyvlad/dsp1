@@ -83,11 +83,11 @@ void Signal::convolveHistograms(Signal& anotherSignal, int bins) {
     std::iota(histogramXAxis.begin(), histogramXAxis.end(), 0);
 }
 
-void Signal::setByFormula(int count, double step, double a, double b, double sigma, double mu) {
+void Signal::setByFormula(int count, double step, double a, double sigma, double mu) {
     signal.clear();
     signal.reserve(count);
 
-    auto formula = [&, count, step, a, b, sigma, mu](int k) -> double {
+    auto formula = [&, count, step, a, sigma, mu](int k) -> double {
         double result = 0;
         double a_k = 0;
         double cos_f = 0;
