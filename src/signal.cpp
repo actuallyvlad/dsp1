@@ -46,9 +46,7 @@ void Signal::setByConvolution(const Signal& signalA, const Signal& signalB) {
     QVector<double> signalAData = signalA.getSignal();
     QVector<double> signalBData = signalB.getSignal();
 
-    for (int i = 0; i < minSize; ++i) {
-        signal.push_back(signalAData[minSize - i - 1] * signalBData[i]);
-    }
+    signal = convolve(signalAData, signalBData);
 
     setMinMax();
 }
