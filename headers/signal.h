@@ -14,7 +14,7 @@ class Signal
         void setBySum(const std::initializer_list<Signal> signalsToAdd);
         void setByConvolution(const Signal& signalA, const Signal& signalB);
         void setByFormula(int count, double step, double a, double sigma, double mu);
-        void setByNoise(int count, double mean, double sd);
+        void setByNoise(int count, double mean, double sd, double lowBoundary, double highBoundary);
         void setHistogram(double bins);
         const QVector<double>& getSignal() const;
         const QVector<double>& getHistogramXAxis() const;

@@ -129,7 +129,7 @@ void Signal::setByTriangle(int count, double height) {
 }
 */
 
-void Signal::setByNoise(int count, double mean, double sd) {
+void Signal::setByNoise(int count, double mean, double sd, double lowBoundary, double highBoundary) {
     std::default_random_engine generator;
     std::normal_distribution<double> distribution(mean, sd);
 
@@ -137,7 +137,13 @@ void Signal::setByNoise(int count, double mean, double sd) {
 
     for (int i = 0; i < count; ++i) {
         double number = distribution(generator);
-        signal.push_back(number);
+
+        if (number >= lowBoundary && number <= highBoundary) {
+            signal.push_back(number);
+        }
+        else {
+            --i;
+        }
     }
 
 

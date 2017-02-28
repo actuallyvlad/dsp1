@@ -187,7 +187,7 @@ void MainWindow::on_buttonRun_clicked()
     tempSignal.setByFormula(signalCount, signalStep, signalA, signalSigma, signalMu);
     data[signalLabel] = tempSignal;
 
-    tempSignal.setByNoise(noiseCount, noiseMean, noiseSD);
+    tempSignal.setByNoise(noiseCount, noiseMean, noiseSD, data[signalLabel].getMin(), data[signalLabel].getMax());
     data[noiseLabel] = tempSignal;
 
     tempSignal.setBySum({data[signalLabel], data[noiseLabel]});
