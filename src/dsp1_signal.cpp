@@ -53,7 +53,7 @@ void Signal::setByConvolution(const Signal& signalA, const Signal& signalB) {
 
 QVector<double> Signal::convolve(const QVector<double>& dataA, const QVector<double>& dataB) {
     int minSize = std::min(dataA.size(), dataB.size());
-    int convSize = 2*dataA.size() - 1;
+    int convSize = 2*minSize - 1;
 
     QVector<double> convolution;
     convolution.resize(convSize);
@@ -162,7 +162,7 @@ void Signal::setHistogram(double bins) {
     histogramXAxis.clear();
     histogramYAxis.clear();
 
-    histogramBin = fabs( getMax()-getMin() ) / histogramBins;
+    double histogramBin = fabs( getMax()-getMin() ) / histogramBins;
 
     for (auto i = 0; i < signal.size(); ++i) {
         ++histogram[hround(signal[i], histogramBin)];

@@ -37,7 +37,6 @@ class Signal
         double min;
         double max;
         double histogramBins;
-        double histogramBin;
 };
 
 #endif // DSP1_SIGNAL_H
