@@ -42,7 +42,7 @@ void MainWindow::createTable(QTableWidget* table, int numOfRows, int numOfCols, 
 // Only works for numeric types
 // Table can only be filled with data of __the same__ type
 
-template<typename T, typename = typename std::enable_if<std::is_arithmetic<T>::value, T>::type>
+template<typename T, typename>
 void MainWindow::fillTable(QTableWidget* table, const std::initializer_list<QVector<T>> colsData) {
     int colIndex = 0;
 
