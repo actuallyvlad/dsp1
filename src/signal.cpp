@@ -53,32 +53,36 @@ void Signal::setByConvolution(const Signal& signalA, const Signal& signalB) {
     setMinMax();
 }
 
-void Signal::convolveHistograms(Signal& anotherSignal, int bins) {
-    // make sure that histograms exist and use the same bin value
-    setHistogram(bins);
-    double anotherBins = fabs(anotherSignal.getMax() - anotherSignal.getMin()) / histogramBin;
-    anotherSignal.setHistogram(anotherBins);
-
-    QVector<double> anotherHistogramYAxis = anotherSignal.getHistogramYAxis();
-    int hSize = histogramYAxis.size();
-    int cSize = hSize * 2 - 1;
-    histogramYAxis.resize(cSize);
-    anotherHistogramYAxis.resize(cSize);
+QVector<double> Signal::convolve(const QVector<double>& dataA, const QVector<double>& dataB) {
+    int minSize = std::min(dataA.size(), dataB.size());
+    int convSize = 2*dataA.size() - 1;
 
     QVector<double> convolution;
-    convolution.resize(cSize);
+    convolution.resize(convSize);
 
-    for (int i = 0; i < cSize; ++i) {
+    for (int i = 0; i < convSize; ++i) {
         for (int j = 0; j <= i; ++j) {
-            convolution[cSize - 1 - i] += histogramYAxis[i-j] * anotherHistogramYAxis[j];
+            if ((i-j) < minSize && j < minSize) {
+                convolution[convSize - 1 - i] += dataA[i-j] * dataB[j];
+            }
         }
     }
+
+    return convolution;
+}
+
+void Signal::convolveHistograms(Signal& anotherSignal, int bins) {
+    // make sure that histograms exist and use the same bins value
+    setHistogram(bins);
+    anotherSignal.setHistogram(bins);
+
+    QVector<double> convolution = convolve(histogramYAxis, anotherSignal.getHistogramYAxis());
 
     histogramYAxis.clear();
     histogramYAxis = convolution;
 
     histogramXAxis.clear();
-    histogramXAxis.resize(cSize);
+    histogramXAxis.resize(convolution.size());
 
     std::iota(histogramXAxis.begin(), histogramXAxis.end(), 0);
 }
@@ -107,7 +111,7 @@ void Signal::setByFormula(int count, double step, double a, double sigma, double
     setMinMax();
 }
 
-/* Used as example of another formula
+/* Used as an example of another formula
 void Signal::setByTriangle(int count, double height) {
     signal.clear();
     signal.reserve(count);

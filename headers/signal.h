@@ -26,6 +26,7 @@ class Signal
         double getMax() const;
         size_t getSize() const;
     private:
+        QVector<double> convolve(const QVector<double>& dataA, const QVector<double>& dataB);
         double hround(double value, double bin);
         void setMinMax();
 
