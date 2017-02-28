@@ -2,7 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include "signal.h"
+#include "dsp1_signal.h"
 #include "qcustomplot.h"
 
 namespace Ui {

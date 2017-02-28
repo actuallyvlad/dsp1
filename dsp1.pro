@@ -35,11 +35,11 @@ INCLUDEPATH += headers \
 SOURCES += main.cpp\
     mainwindow.cpp \
     qcustomplot.cpp \
-    signal.cpp
+    dsp1_signal.cpp
 
 HEADERS  += mainwindow.h \
     qcustomplot.h \
-    signal.h \
+    dsp1_signal.h \
     constants.h
 
 FORMS    += mainwindow.ui

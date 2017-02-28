@@ -1,5 +1,5 @@
-#ifndef SIGNAL_H
-#define SIGNAL_H
+#ifndef DSP1_SIGNAL_H
+#define DSP1_SIGNAL_H
 
 #include <QVector>
 #include <QMap>
@@ -40,4 +40,4 @@ class Signal
         double histogramBin;
 };
 
-#endif // SIGNAL_H
+#endif // DSP1_SIGNAL_H

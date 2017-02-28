@@ -1,4 +1,4 @@
-#include "signal.h"
+#include "dsp1_signal.h"
 
 Signal::Signal() : min(0), max(0), histogramBins(0) {
 }
