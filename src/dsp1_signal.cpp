@@ -1,5 +1,11 @@
 #include "dsp1_signal.h"
 
+#define _USE_MATH_DEFINES
+#include <math.h>
+#include <QMap>
+#include <random>
+#include <algorithm>
+
 Signal::Signal() : min(0), max(0), histogramBins(0) {
 }
 

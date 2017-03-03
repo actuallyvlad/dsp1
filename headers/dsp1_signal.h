@@ -2,10 +2,6 @@
 #define DSP1_SIGNAL_H
 
 #include <QVector>
-#include <QMap>
-#include <random>
-#include <algorithm>
-#include <math.h>
 
 class Signal
 {
