@@ -1,6 +1,6 @@
 ## <img src="images/logo.png" width="128px">  DSP1 - Digital Signal Processing tool 
 
-DSP1 is a course project for the Information Theory course at the ITMO University. It allows users to study signals (that are defined by the formula below), their interactions with gaussian noise and the resulted probabilities of such interactions.
+DSP1 is a project for the Information Theory course at the ITMO University. It allows users to study signals (that are defined by the formula below), their interactions with gaussian noise and the resulted probabilities of such interactions.
 
 Formula used to produce signal output:
 
